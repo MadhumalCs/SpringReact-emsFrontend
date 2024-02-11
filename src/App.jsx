@@ -2,14 +2,21 @@ import './App.css';
 import FooterComp from './componenets/FooterComp';
 import HeaderComp from './componenets/HeaderComp';
 import ListEmpComp from './componenets/ListEmpComp';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-  <>
-  <HeaderComp/>
-  <ListEmpComp/>
-  <FooterComp/>
-  </>
+    <>
+      <BrowserRouter>
+        <HeaderComp />
+        <Routes>
+          <Route path='/' element={<ListEmpComp />}></Route>
+          <Route path='/employees' element={<ListEmpComp />}></Route>
+        </Routes>
+    
+        <FooterComp />
+      </BrowserRouter>
+    </>
   );
 }
 
