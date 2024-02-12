@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import { createEmployee } from '../services/EmployeeService';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeComp = () => {
     //--- defined state varialbles using useState hook.
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+
+    const navigator = useNavigate();
 
     // function handleFirstName(e){
     //     setFirstName(e.target.value);
@@ -15,13 +19,20 @@ const EmployeeComp = () => {
     // function handleEmail(e){
     //     setEmail(e.target.value);
     // }
-    function saveEmployee(e){
+    function saveEmployee(e) {
         e.preventDefault();
-        const employee={firstName,lastName,email}
+        const employee = { firstName, lastName, email }
         console.log(employee);
+
+        createEmployee(employee).then((response) => {
+            console.log(response.data);
+            navigator('/employees');
+        });
     }
+
+
     return (
-        <div className='container '><br/><br/>
+        <div className='container '><br /><br />
             <div className='row mb-10'>
                 <div className='card col-md-6 offset-md-3 mt-10 mb-10'>
                     <h1 className='text-center mb-10'>Add Employee</h1>
