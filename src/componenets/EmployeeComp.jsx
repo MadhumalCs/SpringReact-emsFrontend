@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { createEmployee } from '../services/EmployeeService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployeeComp = () => {
     //--- defined state varialbles using useState hook.
@@ -15,6 +15,7 @@ const EmployeeComp = () => {
         email: ''
     })
 
+    const { id } = useParams();
     const navigator = useNavigate();
 
     // function handleFirstName(e){
@@ -36,7 +37,7 @@ const EmployeeComp = () => {
                 console.log(response.data);
                 navigator('/employees');
             });
-        } 
+        }
 
 
     }
@@ -70,11 +71,21 @@ const EmployeeComp = () => {
         return valid;
     }
 
+    function pageTitle() {
+        if (id) {
+            return <h1 className='text-center mb-10'>Update Employee</h1>
+        } else {
+            return <h1 className='text-center mb-10'>Add Employee</h1>
+        }
+    }
+
     return (
         <div className='container '><br /><br />
             <div className='row mb-10'>
                 <div className='card col-md-6 offset-md-3 mt-10 mb-10'>
-                    <h1 className='text-center mb-10'>Add Employee</h1>
+                    {
+                        pageTitle()
+                    }
                     <div className='card-body'>
                         <form >
                             <div className='form-group mb-2'>
@@ -84,7 +95,7 @@ const EmployeeComp = () => {
                                     placeholder='Enter first name here'
                                     name='firstName'
                                     value={firstName}
-                                    className={`form-control ${errors.firstName ? 'is-invalid':''}`}
+                                    className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
                                 {errors.firstName && <div className='invalid-feedback'>{errors.firstName}</div>}
@@ -96,7 +107,7 @@ const EmployeeComp = () => {
                                     placeholder='Enter last name here'
                                     name='lastName'
                                     value={lastName}
-                                    className={`form-control ${errors.lastName ? 'is-invalid':''}`}
+                                    className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
                                     onChange={(e) => setLastName(e.target.value)}
                                 />
                                 {errors.lastName && <div className='invalid-feedback'>{errors.lastName}</div>}
@@ -108,7 +119,7 @@ const EmployeeComp = () => {
                                     placeholder='Enter email  here'
                                     name='email'
                                     value={email}
-                                    className={`form-control ${errors.email ? 'is-invalid':''}`}
+                                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                                 {errors.firstName && <div className='invalid-feedback'>{errors.email}</div>}

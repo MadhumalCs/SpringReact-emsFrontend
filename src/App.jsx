@@ -14,6 +14,7 @@ function App() {
           <Route path='/' element={<ListEmpComp />}></Route>
           <Route path='/employees' element={<ListEmpComp />}></Route>
           <Route path='/add-employee' element={<EmployeeComp />}></Route>
+          <Route path='/edit-employee/:id' element={<EmployeeComp />}></Route>
         </Routes>
     
         <FooterComp />

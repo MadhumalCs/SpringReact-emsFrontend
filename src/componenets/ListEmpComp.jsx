@@ -20,6 +20,10 @@ const ListEmpComp = () => {
         navigator('/add-employee');
     }
 
+    function updateEmp(id){
+        navigator(`/edit-employee/${id}`);
+    }
+
 
     return (
         <div className='row mb-10'>
@@ -33,6 +37,7 @@ const ListEmpComp = () => {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
+                            <th>Actions</th>
 
                         </tr>
                     </thead>
@@ -44,6 +49,9 @@ const ListEmpComp = () => {
                                     <td>{employee.firstName}</td>
                                     <td>{employee.lastName}</td>
                                     <td>{employee.email}</td>
+                                    <td>
+                                        <button className='btn btn-info' onClick={() => updateEmp(employee.id)}>Update</button>
+                                    </td>
                                 </tr>
                             )
                         }
