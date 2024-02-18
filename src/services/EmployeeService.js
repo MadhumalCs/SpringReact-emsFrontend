@@ -8,3 +8,7 @@ const REST_API_BASED_URL = "http://localhost:8085/api/employees";
 export const listEmployees = () => axios.get(REST_API_BASED_URL);
 
 export const createEmployee = (employee) => axios.post(REST_API_BASED_URL, employee);
+
+export const getEmployee = (employeeId) => axios.get(REST_API_BASED_URL + '/' + employeeId);
+
+export const updateEmployee = (employeeId, employee) => axios.put(REST_API_BASED_URL + '/' + employeeId, employee);

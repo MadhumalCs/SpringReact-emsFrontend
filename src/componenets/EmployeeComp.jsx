@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createEmployee } from '../services/EmployeeService';
+import React, { useEffect, useState } from 'react'
+import { createEmployee, getEmployee, updateEmployee } from '../services/EmployeeService';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployeeComp = () => {
@@ -15,8 +15,22 @@ const EmployeeComp = () => {
         email: ''
     })
 
-    const { id } = useParams();
     const navigator = useNavigate();
+
+    const { id } = useParams();
+    useEffect(() => {
+
+        if (id) {
+            getEmployee(id).then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setEmail(response.data.email);
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+
+    }, []);
 
     // function handleFirstName(e){
     //     setFirstName(e.target.value);
@@ -33,10 +47,24 @@ const EmployeeComp = () => {
         if (validateForm()) {
             const employee = { firstName, lastName, email }
             console.log(employee);
-            createEmployee(employee).then((response) => {
-                console.log(response.data);
-                navigator('/employees');
-            });
+
+            if (id) {
+                updateEmployee(id, employee).then((response) => {
+                    console.log('Updated Data' + response.data);
+                    navigator('/employees');
+                }).catch(error => {
+                    console.error(error);
+                });
+            } else {
+                createEmployee(employee).then((response) => {
+                    console.log(response.data);
+                    navigator('/employees');
+                }).catch(error => {
+                    console.error(error);
+                });
+
+            }
+
         }
 
 
