@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listEmployees } from '../services/EmployeeService';
+import { listEmployees, deleteEmployee } from '../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -9,19 +9,33 @@ const ListEmpComp = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
+        getAllEmployees();
+    }, [])
+
+    function getAllEmployees() {
         listEmployees().then((response) => {
             setEmployees(response.data);
         }).catch(error => {
             console.log(error);
-        })
-    }, [])
+        });
+    }
 
-    function addNewEmployee(){
+    function addNewEmployee() {
         navigator('/add-employee');
     }
 
-    function updateEmp(id){
+    function updateEmp(id) {
         navigator(`/edit-employee/${id}`);
+    }
+
+    function deleteEmp(id) {
+        if (window.confirm("Are you sure you want to delete this record?")) {
+            deleteEmployee(id).then((response) => {
+                getAllEmployees();
+            }).catch(error => {
+                console.error(error);
+            });
+        }
     }
 
 
@@ -51,6 +65,9 @@ const ListEmpComp = () => {
                                     <td>{employee.email}</td>
                                     <td>
                                         <button className='btn btn-info' onClick={() => updateEmp(employee.id)}>Update</button>
+                                    </td>
+                                    <td>
+                                        <button className='btn btn-danger' onClick={() => deleteEmp(employee.id)}>Delete</button>
                                     </td>
                                 </tr>
                             )
